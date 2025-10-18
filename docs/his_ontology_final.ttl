@@ -1,0 +1,467 @@
+@prefix : <https://leabht.github.io/his-ontology#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <https://leabht.github.io/his-ontology#> .
+
+<https://leabht.github.io/his-ontology#> rdf:type owl:Ontology ;
+                                          dc:creator "ALEXANDRE Émile, BOUCHET Léa, CATOIRE Charlotte, JUSTINE Emma" ;
+                                          dc:date "2025-10-18" ;
+                                          rdfs:comment "An ontology describing the main concepts, techniques, systems and research outputs related to Hybrid Intelligent Systems, including neuro-symbolic, human-in-the-loop, and explainable AI approaches." .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty ;
+           rdfs:label "creator"@en .
+
+
+###  http://purl.org/dc/elements/1.1/date
+dc:date rdf:type owl:AnnotationProperty ;
+        rdfs:label "creation date"@en .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+rdfs:comment rdfs:label "ontology comment/description"@en .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://leabht.github.io/his-ontology#addresses
+:addresses rdf:type owl:ObjectProperty ;
+           rdfs:domain :HybridTechnique ,
+                       :ResearchOutput ;
+           rdfs:range :Challenge ;
+           rdfs:label "addresses"@en .
+
+
+###  https://leabht.github.io/his-ontology#appliedTo
+:appliedTo rdf:type owl:ObjectProperty ;
+           rdfs:domain :HybridTechnique ;
+           rdfs:range :Task ;
+           rdfs:label "is applied to"@en .
+
+
+###  https://leabht.github.io/his-ontology#developedBy
+:developedBy rdf:type owl:ObjectProperty ;
+             owl:inverseOf :develops ;
+             rdfs:domain :HybridIntelligenceSystem ,
+                         :ResearchOutput ;
+             rdfs:range :Agent ;
+             rdfs:label "is developed by"@en .
+
+
+###  https://leabht.github.io/his-ontology#develops
+:develops rdf:type owl:ObjectProperty ;
+          rdfs:domain :Agent ;
+          rdfs:range :HybridIntelligenceSystem ,
+                     :ResearchOutput ;
+          rdfs:label "develops"@en .
+
+
+###  https://leabht.github.io/his-ontology#evaluatedBy
+:evaluatedBy rdf:type owl:ObjectProperty ;
+             owl:inverseOf :evaluates ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :HybridIntelligenceSystem
+                                         :HybridTechnique
+                                       )
+                         ] ;
+             rdfs:range :EvaluationMethod ;
+             rdfs:label "is evaluated by"@en .
+
+
+###  https://leabht.github.io/his-ontology#evaluates
+:evaluates rdf:type owl:ObjectProperty ;
+           rdfs:domain :EvaluationMethod ;
+           rdfs:range [ rdf:type owl:Class ;
+                        owl:unionOf ( :HybridIntelligenceSystem
+                                      :HybridTechnique
+                                    )
+                      ] ;
+           rdfs:label "evaluates"@en .
+
+
+###  https://leabht.github.io/his-ontology#hasDomain
+:hasDomain rdf:type owl:ObjectProperty ;
+           rdfs:domain :HybridIntelligenceSystem ,
+                       :HybridTechnique ;
+           rdfs:range :ApplicationDomain ;
+           rdfs:label "has application domain"@en .
+
+
+###  https://leabht.github.io/his-ontology#involves
+:involves rdf:type owl:ObjectProperty ;
+          rdfs:domain :HybridIntelligenceSystem ;
+          rdfs:range :Agent ;
+          rdfs:label "involves"@en .
+
+
+###  https://leabht.github.io/his-ontology#presentedAt
+:presentedAt rdf:type owl:ObjectProperty ;
+             rdfs:domain :ResearchOutput ;
+             rdfs:range :Conference ;
+             rdfs:label "is presented at"@en .
+
+
+###  https://leabht.github.io/his-ontology#solves
+:solves rdf:type owl:ObjectProperty ;
+        rdfs:domain :HybridIntelligenceSystem ,
+                    :HybridTechnique ;
+        rdfs:range :Task ;
+        rdfs:label "solves"@en .
+
+
+###  https://leabht.github.io/his-ontology#uses
+:uses rdf:type owl:ObjectProperty ;
+      rdfs:domain :HybridTechnique ;
+      rdfs:range :Technique ;
+      rdfs:label "uses"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://leabht.github.io/his-ontology#hasDescription
+:hasDescription rdf:type owl:DatatypeProperty ;
+                rdfs:domain owl:Thing ;
+                rdfs:range xsd:string ;
+                rdfs:label "has description"@en .
+
+
+###  https://leabht.github.io/his-ontology#hasScore
+:hasScore rdf:type owl:DatatypeProperty ;
+          rdfs:domain :PerformanceMetric ;
+          rdfs:range xsd:float ;
+          rdfs:label "has score"@en .
+
+
+###  https://leabht.github.io/his-ontology#hasTitle
+:hasTitle rdf:type owl:DatatypeProperty ;
+          rdfs:domain :ResearchOutput ;
+          rdfs:range xsd:string ;
+          rdfs:label "has title"@en .
+
+
+###  https://leabht.github.io/his-ontology#hasURL
+:hasURL rdf:type owl:DatatypeProperty ;
+        rdfs:domain :ResearchOutput ;
+        rdfs:range xsd:anyURI ;
+        rdfs:label "has URL"@en .
+
+
+###  https://leabht.github.io/his-ontology#hasYear
+:hasYear rdf:type owl:DatatypeProperty ;
+         rdfs:domain :ResearchOutput ;
+         rdfs:range xsd:gYear ;
+         rdfs:label "has year"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://leabht.github.io/his-ontology#AdaptiveInterface
+:AdaptiveInterface rdf:type owl:Class ;
+                   rdfs:subClassOf :InteractionMode ;
+                   rdfs:label "Adaptive Interface"@en .
+
+
+###  https://leabht.github.io/his-ontology#Agent
+:Agent rdf:type owl:Class ;
+       rdfs:label "Agent"@en .
+
+
+###  https://leabht.github.io/his-ontology#ApplicationDomain
+:ApplicationDomain rdf:type owl:Class ;
+                   rdfs:label "Application Domain"@en .
+
+
+###  https://leabht.github.io/his-ontology#ArtificialIntelligence
+:ArtificialIntelligence rdf:type owl:Class ;
+                        rdfs:subClassOf :System ;
+                        rdfs:label "Artificial Intelligence System"@en .
+
+
+###  https://leabht.github.io/his-ontology#Challenge
+:Challenge rdf:type owl:Class ;
+           rdfs:label "Challenge"@en .
+
+
+###  https://leabht.github.io/his-ontology#CoLearningProcess
+:CoLearningProcess rdf:type owl:Class ;
+                   rdfs:subClassOf :InteractionMode ;
+                   rdfs:label "Co-learning Process"@en .
+
+
+###  https://leabht.github.io/his-ontology#Conference
+:Conference rdf:type owl:Class ;
+            rdfs:label "Conference"@en .
+
+
+###  https://leabht.github.io/his-ontology#DecisionMakingTask
+:DecisionMakingTask rdf:type owl:Class ;
+                    rdfs:subClassOf :Task ;
+                    rdfs:label "Decision-Making Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#EvaluationMethod
+:EvaluationMethod rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Restriction ;
+                                        owl:onProperty :evaluates ;
+                                        owl:someValuesFrom :System
+                                      ] ;
+                  rdfs:label "Evaluation Method"@en .
+
+
+###  https://leabht.github.io/his-ontology#EvaluationTask
+:EvaluationTask rdf:type owl:Class ;
+                rdfs:subClassOf :Task ;
+                rdfs:label "Evaluation Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#ExplainableTechnique
+:ExplainableTechnique rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( :HybridTechnique
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty :addresses ;
+                                                                   owl:someValuesFrom :Challenge
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:subClassOf :HybridTechnique ;
+                      rdfs:label "Explainable Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#HumanAgent
+:HumanAgent rdf:type owl:Class ;
+            rdfs:subClassOf :Agent ;
+            rdfs:label "Human Agent"@en .
+
+
+###  https://leabht.github.io/his-ontology#HumanFeedback
+:HumanFeedback rdf:type owl:Class ;
+               rdfs:subClassOf :EvaluationMethod ;
+               rdfs:label "Human Feedback"@en .
+
+
+###  https://leabht.github.io/his-ontology#HumanInTheLoopTechnique
+:HumanInTheLoopTechnique rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( :HybridTechnique
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty :evaluatedBy ;
+                                                                      owl:someValuesFrom :HumanFeedback
+                                                                    ]
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:subClassOf :HybridTechnique ;
+                         rdfs:label "Human-in-the-Loop Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#HybridAgent
+:HybridAgent rdf:type owl:Class ;
+             rdfs:subClassOf :Agent ;
+             rdfs:label "Hybrid Agent"@en .
+
+
+###  https://leabht.github.io/his-ontology#HybridIntelligenceSystem
+:HybridIntelligenceSystem rdf:type owl:Class ;
+                          rdfs:subClassOf :System ;
+                          rdfs:label "Hybrid Intelligence System"@en .
+
+
+###  https://leabht.github.io/his-ontology#HybridTechnique
+:HybridTechnique rdf:type owl:Class ;
+                 rdfs:subClassOf :Technique ;
+                 rdfs:label "Hybrid Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#InteractionMode
+:InteractionMode rdf:type owl:Class ;
+                 rdfs:label "Interaction Mode"@en .
+
+
+###  https://leabht.github.io/his-ontology#KnowledgeBasedTechnique
+:KnowledgeBasedTechnique rdf:type owl:Class ;
+                         rdfs:subClassOf :Technique ;
+                         rdfs:label "Knowledge-Based Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#LearningTask
+:LearningTask rdf:type owl:Class ;
+              rdfs:subClassOf :Task ;
+              rdfs:label "Learning Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#LlmAsJudge
+:LlmAsJudge rdf:type owl:Class ;
+            rdfs:subClassOf :EvaluationMethod ;
+            rdfs:label "LLM as Judge"@en .
+
+
+###  https://leabht.github.io/his-ontology#MachineAgent
+:MachineAgent rdf:type owl:Class ;
+              rdfs:subClassOf :Agent ;
+              rdfs:label "Machine Agent"@en .
+
+
+###  https://leabht.github.io/his-ontology#NeuroSymbolicTechnique
+:NeuroSymbolicTechnique rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( :HybridTechnique
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty :uses ;
+                                                                     owl:someValuesFrom :KnowledgeBasedTechnique
+                                                                   ]
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty :uses ;
+                                                                     owl:someValuesFrom :ReinforcementLearningTechnique
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf :HybridTechnique ;
+                        rdfs:label "Neuro-Symbolic Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#PerceptionTask
+:PerceptionTask rdf:type owl:Class ;
+                rdfs:subClassOf :Task ;
+                rdfs:label "Perception Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#PerformanceMetric
+:PerformanceMetric rdf:type owl:Class ;
+                   rdfs:subClassOf :EvaluationMethod ;
+                   rdfs:label "Performance Metric"@en .
+
+
+###  https://leabht.github.io/his-ontology#ReasoningTask
+:ReasoningTask rdf:type owl:Class ;
+               rdfs:subClassOf :Task ;
+               rdfs:label "Reasoning Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#ReinforcementLearningTechnique
+:ReinforcementLearningTechnique rdf:type owl:Class ;
+                                rdfs:subClassOf :Technique ;
+                                rdfs:label "Reinforcement Learning Technique"@en .
+
+
+###  https://leabht.github.io/his-ontology#ResearchOutput
+:ResearchOutput rdf:type owl:Class ;
+                rdfs:label "Research Output"@en .
+
+
+###  https://leabht.github.io/his-ontology#System
+:System rdf:type owl:Class ;
+        rdfs:label "System"@en .
+
+
+###  https://leabht.github.io/his-ontology#Task
+:Task rdf:type owl:Class ;
+      rdfs:label "Task"@en .
+
+
+###  https://leabht.github.io/his-ontology#Technique
+:Technique rdf:type owl:Class ;
+           rdfs:label "Technique"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://leabht.github.io/his-ontology#Accuracy
+:Accuracy rdf:type owl:NamedIndividual ,
+                   :PerformanceMetric ;
+          :hasDescription "Measure of how many predictions are correct." .
+
+
+###  https://leabht.github.io/his-ontology#AlphaGo
+:AlphaGo rdf:type owl:NamedIndividual ,
+                  :HybridIntelligenceSystem ;
+         :developedBy :DeepMindTeam ;
+         :evaluatedBy :Accuracy ;
+         :solves :GoGame .
+
+
+###  https://leabht.github.io/his-ontology#AlphaGo2016Nature
+:AlphaGo2016Nature rdf:type owl:NamedIndividual ,
+                            :ResearchOutput ;
+                   :presentedAt :HIS ;
+                   :hasTitle "Mastering the game of Go with deep neural networks and tree search." ;
+                   :hasURL "https://doi.org/10.1038/nature16961"^^xsd:anyURI ;
+                   :hasYear "2016"^^xsd:gYear .
+
+
+###  https://leabht.github.io/his-ontology#BLEU
+:BLEU rdf:type owl:NamedIndividual ,
+               :PerformanceMetric ;
+      :hasDescription "Metric for evaluating text generation quality." .
+
+
+###  https://leabht.github.io/his-ontology#DeepMindTeam
+:DeepMindTeam rdf:type owl:NamedIndividual ,
+                       :MachineAgent .
+
+
+###  https://leabht.github.io/his-ontology#DeepReinforcementLearning
+:DeepReinforcementLearning rdf:type owl:NamedIndividual ,
+                                    :ReinforcementLearningTechnique ;
+                           rdfs:label "Deep Reinforcement Learning"@en .
+
+
+###  https://leabht.github.io/his-ontology#F1
+:F1 rdf:type owl:NamedIndividual ,
+             :PerformanceMetric ;
+    :hasDescription "Harmonic mean of precision and recall." .
+
+
+###  https://leabht.github.io/his-ontology#GoGame
+:GoGame rdf:type owl:NamedIndividual ,
+                 :DecisionMakingTask .
+
+
+###  https://leabht.github.io/his-ontology#HAIS
+:HAIS rdf:type owl:NamedIndividual ,
+               :Conference .
+
+
+###  https://leabht.github.io/his-ontology#HHAI
+:HHAI rdf:type owl:NamedIndividual ,
+               :Conference .
+
+
+###  https://leabht.github.io/his-ontology#HIS
+:HIS rdf:type owl:NamedIndividual ,
+              :Conference .
+
+
+###  https://leabht.github.io/his-ontology#MonteCarloTreeSearch
+:MonteCarloTreeSearch rdf:type owl:NamedIndividual ,
+                               :KnowledgeBasedTechnique ;
+                      rdfs:label "Monte Carlo Tree Search"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
